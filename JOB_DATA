@@ -1,0 +1,382 @@
+SQL> set pagesize 100
+SQL> set linesize 100
+SQL> select * from emp;
+
+        ID NAME                 HIREDATE      SALARY POSITION       DEPTNO        AGE CITY
+---------- -------------------- --------- ---------- ---------- ---------- ---------- ------------
+       100 Archana Patel        31-DEC-18      30000 CEO                10         30 AHMEDABAD
+       101 Pankti Patel         08-AUG-19      35000 EMPLOYEE           10         25 AHMEDABAD
+       102 Milan Patel          17-AUG-17      40000 EMPLOYEE           20         25 NULL
+       103 Darshan Patel        06-AUG-18      32000 EMPLOYEE           20         30 MUMBAI
+       104 YUVI PATEL           12-FEB-19      45000 MANAGER            20         32 AHMEDABAD
+       105 VIRAT KOHLI          25-AUG-20      50000 MANAGER            30         35 ARIZONA
+       106 M.S.DHONI            25-JAN-18      45000 MANAGER            20         33 MUMBAI
+       107 K.L.RAHUL            30-NOV-20      37000 EMPLOYEE           10         29 AHMEDABAD
+       108 SHAHID KAPOOR        28-OCT-18      39000 EMPLOYEE           10         32 NEW YORK
+       109 ROHIT SHARMA         01-OCT-17      40000 EMPLOYEE           40         37 NEW YORK
+       110 JOHNY DEPP           14-FEB-19      46000 MANAGER            40         30 ARIZONA
+       116                      01-JAN-21      35000 TRAINER                       37 ARIZONA
+       115                      31-JAN-21      55000 DEVELOPER                     32 TORONTO
+SQL> update emp set name = 'cristiano'
+  2  where Id = 116;
+
+1 row updated.
+SQL> alter table emp
+  2  rename column position to JOB;
+
+Table altered.
+
+SQL> RENAME EMP TO JOBDATA;
+
+Table renamed.
+
+SQL> SELECT * FROM JOBDATA;
+
+        ID NAME                 HIREDATE      SALARY JOB            DEPTNO        AGE CITY
+---------- -------------------- --------- ---------- ---------- ---------- ---------- ------------
+       100 Archana Patel        31-DEC-18      30000 CEO                10         30 AHMEDABAD
+       101 Pankti Patel         08-AUG-19      35000 EMPLOYEE           10         25 AHMEDABAD
+       102 Milan Patel          17-AUG-17      40000 EMPLOYEE           20         25 NULL
+       103 Darshan Patel        06-AUG-18      32000 EMPLOYEE           20         30 MUMBAI
+       104 YUVI PATEL           12-FEB-19      45000 MANAGER            20         32 AHMEDABAD
+       105 VIRAT KOHLI          25-AUG-20      50000 MANAGER            30         35 ARIZONA
+       106 M.S.DHONI            25-JAN-18      45000 MANAGER            20         33 MUMBAI
+       107 K.L.RAHUL            30-NOV-20      37000 EMPLOYEE           10         29 AHMEDABAD
+       108 SHAHID KAPOOR        28-OCT-18      39000 EMPLOYEE           10         32 NEW YORK
+       109 ROHIT SHARMA         01-OCT-17      40000 EMPLOYEE           40         37 NEW YORK
+       110 JOHNY DEPP           14-FEB-19      46000 MANAGER            40         30 ARIZONA
+       116 cristiano            01-JAN-21      35000 TRAINER                       37 ARIZONA
+       115                      31-JAN-21      55000 DEVELOPER                     32 TORONTO
+
+13 rows selected.
+SQL> SELECT NAME, ID, SALARY, JOB, CITY FROM JOBDATA
+  2  WHERE SALARY BETWEEN 35000 AND 40000;
+
+NAME                         ID     SALARY JOB        CITY
+-------------------- ---------- ---------- ---------- ------------
+Pankti Patel                101      35000 EMPLOYEE   AHMEDABAD
+Milan Patel                 102      40000 EMPLOYEE   NULL
+K.L.RAHUL                   107      37000 EMPLOYEE   AHMEDABAD
+SHAHID KAPOOR               108      39000 EMPLOYEE   NEW YORK
+ROHIT SHARMA                109      40000 EMPLOYEE   NEW YORK
+cristiano                   116      35000 TRAINER    ARIZONA
+
+6 rows selected.
+SQL> SELECT * FROM JOBDATA
+  2  WHERE DEPTNO IN (10,30);
+
+        ID NAME                 HIREDATE      SALARY JOB            DEPTNO        AGE CITY
+---------- -------------------- --------- ---------- ---------- ---------- ---------- ------------
+       100 Archana Patel        31-DEC-18      30000 CEO                10         30 AHMEDABAD
+       101 Pankti Patel         08-AUG-19      35000 EMPLOYEE           10         25 AHMEDABAD
+       105 VIRAT KOHLI          25-AUG-20      50000 MANAGER            30         35 ARIZONA
+       107 K.L.RAHUL            30-NOV-20      37000 EMPLOYEE           10         29 AHMEDABAD
+       108 SHAHID KAPOOR        28-OCT-18      39000 EMPLOYEE           10         32 NEW YORK
+SQL> SELECT NAME, CITY, SALARY FROM JOBDATA
+  2  WHERE CITY = 'AHMEDABAD' AND JOB = 'EMPLOYEE';
+
+NAME                 CITY             SALARY
+-------------------- ------------ ----------
+Pankti Patel         AHMEDABAD         35000
+K.L.RAHUL            AHMEDABAD         37000
+
+SQL> SELECT NAME, JOB, AGE, CITY FROM JOBDATA
+  2  WHERE HIREDATE LIKE '%18';
+
+NAME                 JOB               AGE CITY
+-------------------- ---------- ---------- ------------
+Archana Patel        CEO                30 AHMEDABAD
+Darshan Patel        EMPLOYEE           30 MUMBAI
+M.S.DHONI            MANAGER            33 MUMBAI
+SHAHID KAPOOR        EMPLOYEE           32 NEW YORK
+
+SQL> SELECT * FROM JOBDATA
+  2  WHERE CITY LIKE '%Z%' AND CITY LIKE 'A%';
+
+        ID NAME                 HIREDATE      SALARY JOB            DEPTNO        AGE CITY
+---------- -------------------- --------- ---------- ---------- ---------- ---------- ------------
+       105 VIRAT KOHLI          25-AUG-20      50000 MANAGER            30         35 ARIZONA
+       110 JOHNY DEPP           14-FEB-19      46000 MANAGER            40         30 ARIZONA
+       116 cristiano            01-JAN-21      35000 TRAINER                       37 ARIZONA
+
+SQL> SELECT * FROM JOBDATA
+  2  WHERE CITY LIKE '%Z%' OR CITY LIKE 'A%';
+
+        ID NAME                 HIREDATE      SALARY JOB            DEPTNO        AGE CITY
+---------- -------------------- --------- ---------- ---------- ---------- ---------- ------------
+       100 Archana Patel        31-DEC-18      30000 CEO                10         30 AHMEDABAD
+       101 Pankti Patel         08-AUG-19      35000 EMPLOYEE           10         25 AHMEDABAD
+       104 YUVI PATEL           12-FEB-19      45000 MANAGER            20         32 AHMEDABAD
+       105 VIRAT KOHLI          25-AUG-20      50000 MANAGER            30         35 ARIZONA
+       107 K.L.RAHUL            30-NOV-20      37000 EMPLOYEE           10         29 AHMEDABAD
+       110 JOHNY DEPP           14-FEB-19      46000 MANAGER            40         30 ARIZONA
+       116 cristiano            01-JAN-21      35000 TRAINER                       37 ARIZONA
+
+7 rows selected.
+
+SQL> SELECT * FROM JOBDATA
+  2  WHERE (HIREDATE LIKE '%18' AND ID<108) OR (DEPTNO=10 OR DEPTNO=30);
+
+        ID NAME                 HIREDATE      SALARY JOB            DEPTNO        AGE CITY
+---------- -------------------- --------- ---------- ---------- ---------- ---------- ------------
+       100 Archana Patel        31-DEC-18      30000 CEO                10         30 AHMEDABAD
+       101 Pankti Patel         08-AUG-19      35000 EMPLOYEE           10         25 AHMEDABAD
+       103 Darshan Patel        06-AUG-18      32000 EMPLOYEE           20         30 MUMBAI
+       105 VIRAT KOHLI          25-AUG-20      50000 MANAGER            30         35 ARIZONA
+       106 M.S.DHONI            25-JAN-18      45000 MANAGER            20         33 MUMBAI
+       107 K.L.RAHUL            30-NOV-20      37000 EMPLOYEE           10         29 AHMEDABAD
+       108 SHAHID KAPOOR        28-OCT-18      39000 EMPLOYEE           10         32 NEW YORK
+
+7 rows selected.
+
+SQL> UPDATE JOBDATA SET CITY ='GEORGIA'
+  2  WHERE HIREDATE LIKE '%20' AND JOB='EMPLOYEE' OR CITY = 'NULL';
+
+2 rows updated.
+
+SQL> SELECT * FROM JOBDATA;
+
+        ID NAME                 HIREDATE      SALARY JOB            DEPTNO        AGE CITY
+---------- -------------------- --------- ---------- ---------- ---------- ---------- ------------
+       100 Archana Patel        31-DEC-18      30000 CEO                10         30 AHMEDABAD
+       101 Pankti Patel         08-AUG-19      35000 EMPLOYEE           10         25 AHMEDABAD
+       102 Milan Patel          17-AUG-17      40000 EMPLOYEE           20         25 GEORGIA
+       103 Darshan Patel        06-AUG-18      32000 EMPLOYEE           20         30 MUMBAI
+       104 YUVI PATEL           12-FEB-19      45000 MANAGER            20         32 AHMEDABAD
+       105 VIRAT KOHLI          25-AUG-20      50000 MANAGER            30         35 ARIZONA
+       106 M.S.DHONI            25-JAN-18      45000 MANAGER            20         33 MUMBAI
+       107 K.L.RAHUL            30-NOV-20      37000 EMPLOYEE           10         29 GEORGIA
+       108 SHAHID KAPOOR        28-OCT-18      39000 EMPLOYEE           10         32 NEW YORK
+       109 ROHIT SHARMA         01-OCT-17      40000 EMPLOYEE           40         37 NEW YORK
+       110 JOHNY DEPP           14-FEB-19      46000 MANAGER            40         30 ARIZONA
+       116 cristiano            01-JAN-21      35000 TRAINER                       37 ARIZONA
+       115                      31-JAN-21      55000 DEVELOPER                     32 TORONTO
+
+13 rows selected.
+
+SQL> SAVEPOINT P1
+  2
+SQL> SAVEPOINT P1;
+
+Savepoint created.
+
+SQL> DELETE FROM JOBDATA
+  2  WHERE ID = 115;
+
+1 row deleted.
+
+SQL> SAVEPOINT P2;
+
+Savepoint created.
+
+
+SQL> UPDATE JOBDATA SET SALARY = 70000
+  2  WHERE JOB='CEO';
+
+1 row updated.
+
+SQL> SAVEPOINT P3;
+
+Savepoint created.
+
+SQL> ROLLBACK TO P1;
+
+Rollback complete.
+
+SQL> SELECT * FROM JOBDATA;
+
+        ID NAME                 HIREDATE      SALARY JOB            DEPTNO        AGE CITY
+---------- -------------------- --------- ---------- ---------- ---------- ---------- ------------
+       100 Archana Patel        31-DEC-18      30000 CEO                10         30 AHMEDABAD
+       101 Pankti Patel         08-AUG-19      35000 EMPLOYEE           10         25 AHMEDABAD
+       102 Milan Patel          17-AUG-17      40000 EMPLOYEE           20         25 GEORGIA
+       103 Darshan Patel        06-AUG-18      32000 EMPLOYEE           20         30 MUMBAI
+       104 YUVI PATEL           12-FEB-19      45000 MANAGER            20         32 AHMEDABAD
+       105 VIRAT KOHLI          25-AUG-20      50000 MANAGER            30         35 ARIZONA
+       106 M.S.DHONI            25-JAN-18      45000 MANAGER            20         33 MUMBAI
+       107 K.L.RAHUL            30-NOV-20      37000 EMPLOYEE           10         29 GEORGIA
+       108 SHAHID KAPOOR        28-OCT-18      39000 EMPLOYEE           10         32 NEW YORK
+       109 ROHIT SHARMA         01-OCT-17      40000 EMPLOYEE           40         37 NEW YORK
+       110 JOHNY DEPP           14-FEB-19      46000 MANAGER            40         30 ARIZONA
+       116 cristiano            01-JAN-21      35000 TRAINER                       37 ARIZONA
+       115                      31-JAN-21      55000 DEVELOPER                     32 TORONTO
+
+13 rows selected.
+SQL> SELECT * FROM JOBDATA;
+
+        ID NAME                 HIREDATE      SALARY JOB            DEPTNO        AGE CITY
+---------- -------------------- --------- ---------- ---------- ---------- ---------- ------------
+       100 Archana Patel        31-DEC-18      30000 CEO                10         30 AHMEDABAD
+       101 Pankti Patel         08-AUG-19      35000 EMPLOYEE           10         25 AHMEDABAD
+       102 Milan Patel          17-AUG-17      40000 EMPLOYEE           20         25 GEORGIA
+       103 Darshan Patel        06-AUG-18      32000 EMPLOYEE           20         30 MUMBAI
+       104 YUVI PATEL           12-FEB-19      45000 MANAGER            20         32 AHMEDABAD
+       105 VIRAT KOHLI          25-AUG-20      50000 MANAGER            30         35 ARIZONA
+       106 M.S.DHONI            25-JAN-18      45000 MANAGER            20         33 MUMBAI
+       107 K.L.RAHUL            30-NOV-20      37000 EMPLOYEE           10         29 GEORGIA
+       108 SHAHID KAPOOR        28-OCT-18      39000 EMPLOYEE           10         32 NEW YORK
+       109 ROHIT SHARMA         01-OCT-17      40000 EMPLOYEE           40         37 NEW YORK
+       110 JOHNY DEPP           14-FEB-19      46000 MANAGER            40         30 ARIZONA
+       116 cristiano            01-JAN-21      35000 TRAINER                       37 ARIZONA
+       115                      31-JAN-21      55000 DEVELOPER                     32 TORONTO
+
+13 rows selected.
+
+SQL> SELECT DISTINCT CITY, DEPTNO FROM JOBDATA
+  2  ORDER BY CITY;
+
+CITY             DEPTNO
+------------ ----------
+AHMEDABAD            10
+AHMEDABAD            20
+ARIZONA              30
+ARIZONA              40
+ARIZONA
+GEORGIA              10
+GEORGIA              20
+MUMBAI               20
+NEW YORK             10
+NEW YORK             40
+TORONTO
+
+11 rows selected.
+
+SQL> SELECT DISTINCT DEPTNO, JOB FROM JOBDATA
+  2  WHERE DEPTNO IS NOT NULL
+  3  ORDER BY JOB DESC;
+
+    DEPTNO JOB
+---------- ----------
+        20 MANAGER
+        30 MANAGER
+        40 MANAGER
+        10 EMPLOYEE
+        20 EMPLOYEE
+        40 EMPLOYEE
+        10 CEO
+
+7 rows selected.
+
+SQL> SELECT DISTINCT DEPTNO, JOB FROM JOBDATA
+  2  WHERE DEPTNO IS NULL
+  3  ORDER BY JOB DESC;
+
+    DEPTNO JOB
+---------- ----------
+           TRAINER
+           DEVELOPER
+
+SQL> SELECT DISTINCT DEPTNO, JOB FROM JOBDATA
+  2  ORDER BY JOB DESC;
+
+    DEPTNO JOB
+---------- ----------
+           TRAINER
+        20 MANAGER
+        30 MANAGER
+        40 MANAGER
+        10 EMPLOYEE
+        20 EMPLOYEE
+        40 EMPLOYEE
+           DEVELOPER
+        10 CEO
+
+9 rows selected.
+SQL> SELECT JOB, SUM(SALARY) AS SUM_SALARY FROM JOBDATA
+  2  WHERE JOB <> 'CEO'
+  3  GROUP BY JOB
+  4  ORDER BY JOB DESC;
+
+JOB        SUM_SALARY
+---------- ----------
+TRAINER         35000
+MANAGER        186000
+EMPLOYEE       223000
+DEVELOPER       55000
+
+SQL> RENAME JOBDATA TO JOB_DATA;
+
+Table renamed.
+
+SQL> SELECT CITY, MIN(SALARY) FROM JOB_DATA
+  2  WHERE CITY<>'GEORGIA'
+  3  GROUP BY CITY
+  4  HAVING MIN(SALARY)>30000
+  5  ORDER BY CITY;
+
+CITY         MIN(SALARY)
+------------ -----------
+ARIZONA            35000
+MUMBAI             32000
+NEW YORK           39000
+TORONTO            55000
+
+SQL> SELECT CITY, MIN(SALARY) FROM JOB_DATA
+  2  GROUP BY CITY
+  3  ORDER BY CITY;
+
+CITY         MIN(SALARY)
+------------ -----------
+AHMEDABAD          30000
+ARIZONA            35000
+GEORGIA            37000
+MUMBAI             32000
+NEW YORK           39000
+TORONTO            55000
+
+6 rows selected.
+
+SQL> SELECT CITY, MIN(SALARY) FROM JOB_DATA
+  2  GROUP BY CITY
+  3  HAVING MIN(SALARY)>30000
+  4  ORDER BY CITY;
+
+CITY         MIN(SALARY)
+------------ -----------
+ARIZONA            35000
+GEORGIA            37000
+MUMBAI             32000
+NEW YORK           39000
+TORONTO            55000
+
+SQL> SELECT CITY, MIN(SALARY) FROM JOB_DATA
+  2  WHERE CITY<>'GEORGIA'
+  3  GROUP BY CITY
+  4  ORDER BY CITY;
+
+CITY         MIN(SALARY)
+------------ -----------
+AHMEDABAD          30000
+ARIZONA            35000
+MUMBAI             32000
+NEW YORK           39000
+TORONTO            55000
+
+SQL> SELECT NAME, SALARY, JOB FROM JOB_DATA
+  2  WHERE (JOB, SALARY) IN (SELECT JOB, MIN(SALARY) AS MIN_SALARY FROM JOB_DATA GROUP BY JOB);
+
+NAME                     SALARY JOB
+-------------------- ---------- ----------
+Archana Patel             30000 CEO
+Darshan Patel             32000 EMPLOYEE
+YUVI PATEL                45000 MANAGER
+M.S.DHONI                 45000 MANAGER
+cristiano                 35000 TRAINER
+                          55000 DEVELOPER
+
+6 rows selected.
+
+SQL> SELECT NAME, SALARY AS MIN_SALARY, JOB FROM JOB_DATA
+  2  WHERE (JOB, SALARY) IN (SELECT JOB, MIN(SALARY) FROM JOB_DATA GROUP BY JOB);
+
+NAME                 MIN_SALARY JOB
+-------------------- ---------- ----------
+Archana Patel             30000 CEO
+Darshan Patel             32000 EMPLOYEE
+YUVI PATEL                45000 MANAGER
+M.S.DHONI                 45000 MANAGER
+cristiano                 35000 TRAINER
+                          55000 DEVELOPER
+
+6 rows selected.
+
